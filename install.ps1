@@ -54,12 +54,11 @@ try {
         $fileContent = [System.IO.File]::ReadAllText($filePath, [System.Text.Encoding]::UTF8)
         if ($filename -eq "admin.html") {
             $fileContent = $fileContent -replace 'let owner = "Ziploot";', "let owner = `"$username`";"
-            $fileContent = $fileContent -replace 'let repo = "unlimited-url-shortener";', "let repo = `"$repoName`";"
+            $fileContent = $fileContent -replace 'let repo = "Ziploot.github.io";', "let repo = `"$repoName`";"
         }
         if ($filename -eq "404.html") {
-            # Use simple backslash-free wildcards for reliable PowerShell regex replacement
-            $fileContent = $fileContent -replace 'const owner = window.location.hostname.split.*', "const owner = `"$username`";"
-            $fileContent = $fileContent -replace 'const repo.*=.*owner.*github.*io.*', "const repo = `"$repoName`";"
+            $fileContent = $fileContent -replace 'const owner = "Ziploot";', "const owner = `"$username`";"
+            $fileContent = $fileContent -replace 'const repo = "Ziploot.github.io";', "const repo = `"$repoName`";"
         }
         $contentBytes = [System.Text.Encoding]::UTF8.GetBytes($fileContent)
         $contentBase64 = [Convert]::ToBase64String($contentBytes)
