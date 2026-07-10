@@ -65,6 +65,12 @@
         const targetUrl = redirects[slug.trim().toLowerCase()];
 
         if (targetUrl) {
+          const conf = redirects._config || {};
+          const formId = conf.formId;
+          const slugEntry = conf.entrySlug;
+          const ipEntry = conf.entryIp;
+          const countryEntry = conf.entryCountry;
+          const uaEntry = conf.entryUa;
           if (formId && ipEntry && slugEntry && countryEntry && uaEntry) {
             let ip = "Unknown";
             let country = "Unknown";
