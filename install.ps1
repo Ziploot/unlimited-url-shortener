@@ -51,7 +51,7 @@ try {
 
     # Helper function to upload file to GitHub Pages repository
     function Upload-GitHubFile($filename, $filePath) {
-        $fileContent = Get-Content -Path $filePath -Raw
+        $fileContent = [System.IO.File]::ReadAllText($filePath, [System.Text.Encoding]::UTF8)
         $contentBytes = [System.Text.Encoding]::UTF8.GetBytes($fileContent)
         $contentBase64 = [Convert]::ToBase64String($contentBytes)
         
