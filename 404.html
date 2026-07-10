@@ -4,63 +4,94 @@
   <meta charset="UTF-8">
   <title>Redirecting...</title>
   <style>
-    body { background: #0b0f19; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    body { background: #0b0f19; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; flex-direction: column; gap: 16px; }
     .loader { border: 3px solid rgba(255,255,255,0.1); border-radius: 50%; border-top: 3px solid #818cf8; width: 30px; height: 30px; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    p { color: #64748b; font-size: 13px; }
   </style>
 </head>
 <body>
   <div class="loader"></div>
+  <p>Redirecting...</p>
   <script>
     async function redirect() {
-      // 1. Get current path slug (e.g. /telegram -> telegram)
-      const path = window.location.pathname;
-      const slug = path.split('/').pop().trim().toLowerCase();
+      // Extract slug from path
+      const slug = window.location.pathname.split('/').filter(Boolean).pop() || '';
+
+      if (!slug || slug.endsWith('.html') || slug.includes('.')) {
+        document.body.innerHTML = '<h2 style="font-family:sans-serif">Page not found.</h2>';
+        return;
+      }
+
+      // Detect owner from hostname
+      const owner = window.location.hostname.split('.')[0];
+      const repo  = owner + '.github.io';
+      const rawUrl = 'https://raw.githubusercontent.com/' + owner + '/' + repo + '/main/redirects.json?_=' + Date.now();
+
       try {
-        const res = await fetch('/redirects.json');
+        const res = await fetch(rawUrl);
+        if (!res.ok) throw new Error('Could not load redirects');
         const redirects = await res.json();
-        const targetUrl = redirects[slug];
+        const targetUrl = redirects[slug.trim().toLowerCase()];
 
         if (targetUrl) {
-          // 3. Collect Analytics (Geolocation via public API)
-          let country = "Unknown";
-          let ip = "Unknown";
-          try {
-            const geoRes = await fetch('https://ipapi.co/json/');
-            const geoData = await geoRes.json();
-            ip = geoData.ip || "Unknown";
-            country = geoData.country_name || "Unknown";
-          } catch(e) {}
-
-          const userAgent = navigator.userAgent;
-
-          // 4. Log to Google Sheets via pre-filled Google Form submit
-          // USER MUST SET THEIR FORM ACTION URL AND ENTRY IDS IN ADMIN OR MANUALLY
-          const formId = localStorage.getItem("GOOGLE_FORM_ID");
-          const ipEntry = localStorage.getItem("ENTRY_IP");
-          const slugEntry = localStorage.getItem("ENTRY_SLUG");
-          const countryEntry = localStorage.getItem("ENTRY_COUNTRY");
-          const uaEntry = localStorage.getItem("ENTRY_UA");
+          // Read config dynamically from redirects.json (not localStorage, so it works for all users!)
+          const conf = redirects._config || {};
+          const formId = conf.formId;
+          const slugEntry = conf.entrySlug;
+          const ipEntry = conf.entryIp;
+          const countryEntry = conf.entryCountry;
+          const uaEntry = conf.entryUa;
 
           if (formId && ipEntry && slugEntry && countryEntry && uaEntry) {
-            const formUrl = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
-            const payload = new URLSearchParams();
-            payload.append(`entry.${slugEntry}`, slug);
-            payload.append(`entry.${ipEntry}`, ip);
-            payload.append(`entry.${countryEntry}`, country);
-            payload.append(`entry.${uaEntry}`, userAgent);
+            let ip = "Unknown";
+            let country = "Unknown";
+            
+            // Safe fetch: Geolocation fetch with multi-fallback (ipwho.is -> freeipapi.com)
+            try {
+              const geo = await fetch('https://ipwho.is/');
+              if (geo.ok) {
+                const gd = await geo.json();
+                if (gd.success) {
+                  ip = gd.ip || "Unknown";
+                  country = gd.country || "Unknown";
+                }
+              } else {
+                throw new Error();
+              }
+            } catch(e) {
+              try {
+                const geo = await fetch('https://freeipapi.com/api/json');
+                if (geo.ok) {
+                  const gd = await geo.json();
+                  ip = gd.ipAddress || "Unknown";
+                  country = gd.countryName || "Unknown";
+                }
+              } catch(e2) {}
+            }
 
-            // Send asynchronously via sendBeacon (does not block redirect)
-            navigator.sendBeacon(formUrl, payload);
+            try {
+              const payload = new URLSearchParams();
+              payload.append('entry.' + slugEntry,    slug);
+              payload.append('entry.' + ipEntry,      ip);
+              payload.append('entry.' + countryEntry, country);
+              payload.append('entry.' + uaEntry,      navigator.userAgent);
+              
+              const formUrl = 'https://docs.google.com/forms/d/e/' + formId + '/formResponse';
+              navigator.sendBeacon(formUrl, payload);
+            } catch(e) {}
           }
 
-          // 5. Perform redirection
           window.location.replace(targetUrl);
         } else {
-          document.body.innerHTML = "<h2>Link not found!</h2>";
+          document.querySelector('.loader').style.display = 'none';
+          document.querySelector('p').textContent = '';
+          document.body.innerHTML += '<h2 style="font-family:sans-serif">Link not found: /' + slug + '</h2>';
         }
       } catch (err) {
-        document.body.innerHTML = "<h2>System Error: " + err.toString() + "</h2>";
+        document.querySelector('.loader').style.display = 'none';
+        document.querySelector('p').textContent = '';
+        document.body.innerHTML += '<h2 style="font-family:sans-serif;color:#ef4444">Error: ' + err.message + '</h2>';
       }
     }
     redirect();
