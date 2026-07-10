@@ -124,8 +124,9 @@
       <label style="text-align: left;">GitHub Personal Access Token (PAT)</label>
       <input type="password" id="wizardPat" placeholder="Paste your ghp_... token here" />
       <button class="btn btn-primary" onclick="activateManager()">Activate Manager</button>
-      <p style="font-size: 12px; margin-top: 15px; color: var(--text-muted);">
-        Don't have a token? <a href="https://github.com/settings/tokens/new?description=Ziploot%20Link%20Manager&scopes=public_repo" target="_blank" style="color: var(--primary);">Create one on GitHub</a> (check "public_repo").
+      <p style="font-size: 12px; margin-top: 15px; color: var(--text-muted); line-height: 1.6;">
+        Don't have a token? <a href="https://github.com/settings/tokens/new?description=Ziploot%20Link%20Manager&scopes=public_repo" target="_blank" style="color: var(--primary);">Create a Classic Token</a> (check <strong>"public_repo"</strong>).<br>
+        If using a <strong>Fine-grained Token</strong>, select "All Repositories" and grant <strong>"Contents: Read &amp; Write"</strong> permission.
       </p>
     </div>
 
