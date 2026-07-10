@@ -52,6 +52,13 @@ try {
     # Helper function to upload file to GitHub Pages repository
     function Upload-GitHubFile($filename, $filePath) {
         $fileContent = [System.IO.File]::ReadAllText($filePath, [System.Text.Encoding]::UTF8)
+        if ($filename -eq "admin.html") {
+            $fileContent = $fileContent -replace 'let owner = "Ziploot";', "let owner = `\"$username`\";"
+        }
+        if ($filename -eq "404.html") {
+            # Replace hostname parsing owner detection with hardcoded username to support custom domains
+            $fileContent = $fileContent -replace 'const owner = window.location.hostname.split\(\'\.\'\)\[0\];', "const owner = `\"$username`\";"
+        }
         $contentBytes = [System.Text.Encoding]::UTF8.GetBytes($fileContent)
         $contentBase64 = [Convert]::ToBase64String($contentBytes)
         
