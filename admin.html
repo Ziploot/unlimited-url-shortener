@@ -319,46 +319,54 @@
     }
 
     async function loadRedirects() {
-      const pat = localStorage.getItem("GITHUB_PAT");
-      if (!pat) return;
+      // 1. Fetch local redirects first to show the table instantly (even without token or when logged out)
       try {
-        const metaRes = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/contents/redirects.json", {
-          headers: { "Authorization": "token " + pat, "Cache-Control": "no-cache" }
-        });
-        if (metaRes.ok) {
-          const meta = await metaRes.json();
-          repoSha = meta.sha;
-          const content = atob(meta.content.replace(/
-/g, ""));
-          redirects = JSON.parse(content);
-
-          // If GitHub has a config, update the UI input fields
-          if (redirects._config) {
-            const conf = redirects._config;
-            document.getElementById("prefilledLink").value = conf.prefilledLink || "";
-            document.getElementById("formId").value = conf.formId || "";
-            document.getElementById("entrySlug").value = conf.entrySlug || "";
-            document.getElementById("entryIp").value = conf.entryIp || "";
-            document.getElementById("entryCountry").value = conf.entryCountry || "";
-            document.getElementById("entryUa").value = conf.entryUa || "";
-            
-            // Backup in localStorage
-            localStorage.setItem("PREFILLED_LINK", conf.prefilledLink || "");
-            localStorage.setItem("GOOGLE_FORM_ID", conf.formId || "");
-            localStorage.setItem("ENTRY_SLUG", conf.entrySlug || "");
-            localStorage.setItem("ENTRY_IP", conf.entryIp || "");
-            localStorage.setItem("ENTRY_COUNTRY", conf.entryCountry || "");
-            localStorage.setItem("ENTRY_UA", conf.entryUa || "");
-          }
+        const res = await fetch('redirects.json?v=' + Date.now());
+        if (res.ok) {
+          redirects = await res.json();
           renderTable();
         }
       } catch (e) {
+        console.warn("Could not fetch local redirects.json", e);
+      }
+
+      // 2. Fetch from GitHub API if token exists to get the latest version (bypassing caching) and SHA
+      const pat = localStorage.getItem("GITHUB_PAT");
+      if (pat) {
         try {
-          const res = await fetch("/redirects.json?v=" + Date.now());
-          redirects = await res.json();
-          renderTable();
-        } catch (e2) {
-          document.getElementById("linksContainer").innerHTML = '<div style="text-align:center;padding:20px;color:var(--danger)">Could not load links. Check your PAT.</div>';
+          const metaRes = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/contents/redirects.json", {
+            headers: { "Authorization": "token " + pat, "Cache-Control": "no-cache" }
+          });
+          if (metaRes.ok) {
+            const meta = await metaRes.json();
+            repoSha = meta.sha;
+            const content = atob(meta.content.replace(/\r?\n/g, ""));
+            redirects = JSON.parse(content);
+
+            // If GitHub has a config, update the UI input fields
+            if (redirects._config) {
+              const conf = redirects._config;
+              document.getElementById("prefilledLink").value = conf.prefilledLink || "";
+              document.getElementById("formId").value = conf.formId || "";
+              document.getElementById("entrySlug").value = conf.entrySlug || "";
+              document.getElementById("entryIp").value = conf.entryIp || "";
+              document.getElementById("entryCountry").value = conf.entryCountry || "";
+              document.getElementById("entryUa").value = conf.entryUa || "";
+              
+              // Backup in localStorage
+              localStorage.setItem("PREFILLED_LINK", conf.prefilledLink || "");
+              localStorage.setItem("GOOGLE_FORM_ID", conf.formId || "");
+              localStorage.setItem("ENTRY_SLUG", conf.entrySlug || "");
+              localStorage.setItem("ENTRY_IP", conf.entryIp || "");
+              localStorage.setItem("ENTRY_COUNTRY", conf.entryCountry || "");
+              localStorage.setItem("ENTRY_UA", conf.entryUa || "");
+            }
+            renderTable();
+          } else if (metaRes.status === 401 || metaRes.status === 403 || metaRes.status === 404) {
+            document.getElementById("linksContainer").innerHTML = '<div style="text-align:center;padding:20px;color:var(--danger)">Access Denied. Check your GitHub PAT permissions.</div>';
+          }
+        } catch (e) {
+          console.error("Could not fetch redirects.json from GitHub API", e);
         }
       }
     }
