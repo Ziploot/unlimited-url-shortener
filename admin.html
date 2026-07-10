@@ -376,7 +376,11 @@
       if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
         tipElement.textContent = `Short Link: http://localhost:8000/${slug}`;
       } else {
-        tipElement.textContent = `Short Link: https://${owner}.github.io/${repo}/${slug}`;
+        if (repo === owner + ".github.io") {
+          tipElement.textContent = `Short Link: https://${owner}.github.io/${slug}`;
+        } else {
+          tipElement.textContent = `Short Link: https://${owner}.github.io/${repo}/${slug}`;
+        }
       }
     }
 
@@ -484,7 +488,7 @@
         
         const fullShortUrl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
           ? `http://localhost:8000/${slug}`
-          : `https://${owner}.github.io/${repo}/${slug}`;
+          : (repo === owner + ".github.io" ? `https://${owner}.github.io/${slug}` : `https://${owner}.github.io/${repo}/${slug}`);
           
         row.innerHTML = `
           <div class="link-details">
