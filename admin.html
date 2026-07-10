@@ -320,9 +320,10 @@
     const hostnameParts = window.location.hostname.split('.');
     if (hostnameParts.length >= 3 && hostnameParts[1] === "github" && hostnameParts[2] === "io") {
       owner = hostnameParts[0];
+      repo = owner + ".github.io"; // Default for root user repos
     }
     const pathParts = window.location.pathname.split('/');
-    if (pathParts[1] && pathParts[1] !== "") {
+    if (pathParts[1] && pathParts[1] !== "" && !pathParts[1].endsWith(".html") && pathParts[1] !== "index.html") {
       repo = pathParts[1];
     }
 
