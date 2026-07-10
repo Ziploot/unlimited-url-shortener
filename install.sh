@@ -35,6 +35,12 @@ curl -s -X POST -H "Authorization: token $PAT" \
 upload_file() {
     FILE=$1
     CONTENT=$(curl -sL "https://raw.githubusercontent.com/Ziploot/unlimited-url-shortener/main/$FILE")
+    if [ "$FILE" = "admin.html" ]; then
+        CONTENT="${CONTENT//let owner = \"Ziploot\";/let owner = \"$USERNAME\"}"
+    fi
+    if [ "$FILE" = "404.html" ]; then
+        CONTENT="${CONTENT//const owner = window.location.hostname.split('.')[0];/const owner = \"$USERNAME\"}"
+    fi
     BASE64_CONTENT=$(echo -n "$CONTENT" | base64 | tr -d '\n')
     
     # Get SHA if exists
