@@ -24,25 +24,47 @@
       }
 
       // Detect owner from hostname
-      const owner = window.location.hostname.split('.')[0];
-      const repo  = owner + '.github.io';
-      const rawUrl = 'https://raw.githubusercontent.com/' + owner + '/' + repo + '/main/redirects.json?_=' + Date.now();
+      const owner = "Ziploot";
+      const repo = "Ziploot.github.io";
 
       try {
-        const res = await fetch(rawUrl);
-        if (!res.ok) throw new Error('Could not load redirects');
-        const redirects = await res.json();
+        let redirects = {};
+        let fetched = false;
+
+        // 1. Try to fetch from GitHub API first for real-time (0 cache delay) results
+        try {
+          const apiRes = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/contents/redirects.json");
+          if (apiRes.ok) {
+            const meta = await apiRes.json();
+            const content = atob(meta.content.replace(/\r?\n/g, ""));
+            redirects = JSON.parse(content);
+            fetched = true;
+          }
+        } catch (e) {
+          console.warn("GitHub API fetch error, falling back to raw CDN...", e);
+        }
+
+        // 2. Fallback to raw GitHub usercontent (cached up to 5 mins, no rate limit) if API failed
+        if (!fetched) {
+          try {
+            const rawUrl = 'https://raw.githubusercontent.com/' + owner + '/' + repo + '/main/redirects.json?_=' + Date.now();
+            const rawRes = await fetch(rawUrl);
+            if (rawRes.ok) {
+              redirects = await rawRes.json();
+              fetched = true;
+            }
+          } catch (e) {
+            console.error("Could not fetch redirects from raw CDN", e);
+          }
+        }
+
+        if (!fetched) {
+          throw new Error("Could not load redirects database");
+        }
+
         const targetUrl = redirects[slug.trim().toLowerCase()];
 
         if (targetUrl) {
-          // Read config dynamically from redirects.json (not localStorage, so it works for all users!)
-          const conf = redirects._config || {};
-          const formId = conf.formId;
-          const slugEntry = conf.entrySlug;
-          const ipEntry = conf.entryIp;
-          const countryEntry = conf.entryCountry;
-          const uaEntry = conf.entryUa;
-
           if (formId && ipEntry && slugEntry && countryEntry && uaEntry) {
             let ip = "Unknown";
             let country = "Unknown";
