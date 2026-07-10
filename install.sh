@@ -37,9 +37,11 @@ upload_file() {
     CONTENT=$(curl -sL "https://raw.githubusercontent.com/Ziploot/unlimited-url-shortener/main/$FILE")
     if [ "$FILE" = "admin.html" ]; then
         CONTENT="${CONTENT//let owner = \"Ziploot\";/let owner = \"$USERNAME\"}"
+        CONTENT="${CONTENT//let repo = \"unlimited-url-shortener\";/let repo = \"$REPO_NAME\"}"
     fi
     if [ "$FILE" = "404.html" ]; then
         CONTENT="${CONTENT//const owner = window.location.hostname.split('.')[0];/const owner = \"$USERNAME\"}"
+        CONTENT="${CONTENT//const repo  = owner + '.github.io';/const repo = \"$REPO_NAME\"}"
     fi
     BASE64_CONTENT=$(echo -n "$CONTENT" | base64 | tr -d '\n')
     
