@@ -193,13 +193,9 @@
     let redirects = {};
     let repoSha = "";
 
-    // Auto-detect owner from GitHub Pages hostname
+    // Auto-configured owner and repository (hardcoded by installer)
     let owner = "Ziploot";
-    const hostnameParts = window.location.hostname.split('.');
-    if (hostnameParts.length >= 3 && hostnameParts[1] === "github" && hostnameParts[2] === "io") {
-      owner = hostnameParts[0];
-    }
-    const repo = owner + ".github.io";
+    let repo = "Ziploot.github.io";
 
     const savedPat = localStorage.getItem("GITHUB_PAT");
     if (savedPat) showDashboard();
