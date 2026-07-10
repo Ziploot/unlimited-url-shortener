@@ -30,32 +30,17 @@
       justify-content: center;
       align-items: flex-start;
       padding: 40px 20px;
-      overflow-x: hidden;
     }
-    /* Subtle background glow */
-    .glow {
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(129, 140, 248, 0.05) 0%, rgba(0,0,0,0) 70%);
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: -1;
-      pointer-events: none;
-    }
-    .container { width: 100%; max-width: 760px; margin: 0 auto; z-index: 10; }
-    
-    header { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-bottom: 30px; 
+    .container { width: 100%; max-width: 760px; margin: 0 auto; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 20px;
     }
     h1 { font-family: 'Syne', sans-serif; color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-    
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -66,33 +51,13 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
     h2 { font-family: 'Syne', sans-serif; font-size: 16px; margin-bottom: 18px; color: #fff; display: flex; align-items: center; gap: 8px; }
-    
-    /* Wizard Gate styling */
     .wizard-card {
       text-align: center;
       padding: 40px 30px;
       border: 1px solid rgba(129, 140, 248, 0.15);
-      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.03) 0%, rgba(13, 17, 39, 0.4) 100%);
     }
-    .wizard-logo {
-      font-size: 40px;
-      margin-bottom: 15px;
-      animation: pulse 2s infinite alternate;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.05); }
-    }
-    .wizard-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 25px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
+    .wizard-logo { font-size: 40px; margin-bottom: 15px; }
+    .wizard-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; max-width: 500px; margin-left: auto; margin-right: auto; }
     label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
     input {
       width: 100%;
@@ -108,7 +73,6 @@
     }
     input:focus { border-color: var(--border-focus); outline: none; box-shadow: 0 0 10px rgba(129, 140, 248, 0.15); }
     input::placeholder { color: #475569; }
-    
     .btn {
       padding: 14px 28px;
       border-radius: 10px;
@@ -130,104 +94,44 @@
     .btn-success:hover { background: var(--success-hover); transform: translateY(-1px); }
     .btn-danger { background: var(--danger-bg); color: var(--danger); padding: 8px 16px; font-size: 12px; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; width: auto; }
     .btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
-    
-    /* Active Link list UI */
-    .link-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      gap: 15px;
-      min-width: 0;
-    }
+    .link-row { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--border); gap: 15px; min-width: 0; }
     .link-row:last-child { border-bottom: none; }
     .link-details { min-width: 0; flex: 1; }
     .link-slug { font-family: 'Space Mono', monospace; font-weight: 700; color: #fff; font-size: 15px; margin-bottom: 4px; }
     .link-dest { font-size: 13px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .link-dest a { color: var(--primary); text-decoration: none; }
     .link-dest a:hover { text-decoration: underline; }
-
-    /* Collapsible settings block */
-    .settings-header {
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-    }
-    .settings-header:hover h2 { color: var(--primary); }
-    .settings-body {
-      display: none;
-      margin-top: 20px;
-      border-top: 1px solid var(--border);
-      padding-top: 20px;
-    }
+    .settings-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+    .settings-body { display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
     .settings-body.active { display: block; }
-    
-    .live-link-tip {
-      font-size: 12px;
-      color: var(--success);
-      margin-top: -12px;
-      margin-bottom: 20px;
-      font-family: 'Space Mono', monospace;
-    }
-
-    .warning-msg {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: var(--danger);
-      margin-bottom: 20px;
-      display: none;
-    }
-    
-    .loading-spinner {
-      border: 2px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      border-top: 2px solid #fff;
-      width: 16px;
-      height: 16px;
-      animation: spin 0.8s linear infinite;
-      display: none;
-    }
+    .live-link-tip { font-size: 12px; color: var(--success); margin-top: -12px; margin-bottom: 20px; font-family: 'Space Mono', monospace; }
+    .warning-msg { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--danger); margin-bottom: 20px; display: none; }
+    .loading-spinner { border: 2px solid rgba(255,255,255,0.2); border-radius: 50%; border-top: 2px solid #fff; width: 16px; height: 16px; animation: spin 0.8s linear infinite; display: none; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-  <div class="glow"></div>
   <div class="container">
-    
     <header>
-      <h1>⚡ ZIPLOOT LINK MANAGER</h1>
+      <h1>&#9889; ZIPLOOT LINK MANAGER</h1>
       <button class="btn btn-danger" id="logoutBtn" style="padding: 8px 16px; display: none;" onclick="deactivateManager()">Lock Admin</button>
     </header>
 
-    <!-- STEP 1: Activation Wizard (Shown only when PAT is empty) -->
     <div class="card wizard-card" id="wizardSection">
-      <div class="wizard-logo">🔑</div>
+      <div class="wizard-logo">&#128273;</div>
       <h2>Activate Your Link Manager</h2>
-      <p class="wizard-desc">
-        To create and save short links, please enter your GitHub Personal Access Token (PAT). This token is saved locally in your browser and used to write directly to your repository.
-      </p>
-      
+      <p class="wizard-desc">Enter your GitHub Personal Access Token (PAT) to start creating and managing short links.</p>
       <label style="text-align: left;">GitHub Personal Access Token (PAT)</label>
       <input type="password" id="wizardPat" placeholder="Paste your ghp_... token here" />
       <button class="btn btn-primary" onclick="activateManager()">Activate Manager</button>
-      
       <p style="font-size: 12px; margin-top: 15px; color: var(--text-muted);">
-        Don't have a token? <a href="https://github.com/settings/tokens/new?description=Ziploot%20Link%20Manager&scopes=public_repo" target="_blank" style="color: var(--primary);">Create one instantly on GitHub</a> (Make sure to check "public_repo").
+        Don't have a token? <a href="https://github.com/settings/tokens/new?description=Ziploot%20Link%20Manager&scopes=public_repo" target="_blank" style="color: var(--primary);">Create one on GitHub</a> (check "public_repo").
       </p>
     </div>
 
-    <!-- STEP 2: Main Dashboard (Hidden until PAT is activated) -->
     <div id="dashboardSection" style="display: none;">
-      
-      <!-- Create Short Link Form -->
       <div class="card">
-        <h2>🔗 Create New Short Link</h2>
+        <h2>&#128279; Create New Short Link</h2>
         <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px;">
           <div>
             <label>Short Path (Slug)</label>
@@ -238,107 +142,70 @@
             <input type="text" id="newUrl" placeholder="https://facebook.com/..." />
           </div>
         </div>
-        
-        <div class="live-link-tip" id="liveLinkTip">Live Link: https://username.github.io/repo/slug</div>
-        
+        <div class="live-link-tip" id="liveLinkTip">Short Link: https://your-username.github.io/slug</div>
         <button class="btn btn-success" id="createBtn" onclick="addLink()">
           <span class="loading-spinner" id="createSpinner"></span>
-          <span>Shorten & Save Link</span>
+          <span>Shorten &amp; Save Link</span>
         </button>
       </div>
 
-      <!-- Links List -->
       <div class="card">
-        <h2>📂 Active Redirects</h2>
+        <h2>&#128194; Active Redirects</h2>
         <div id="linksContainer">
-          <!-- Populated dynamically -->
+          <div style="text-align:center; padding:20px; color:var(--text-muted); font-size:14px;">Loading...</div>
         </div>
       </div>
 
-      <!-- Advanced / Optional Settings (Collapsible) -->
       <div class="card">
         <div class="settings-header" onclick="toggleSettings()">
-          <h2>⚙️ Click Analytics Settings (Optional)</h2>
-          <span id="settingsArrow" style="font-size: 18px; color: var(--text-muted);">▼</span>
+          <h2>&#9881;&#65039; Click Analytics Settings (Optional)</h2>
+          <span id="settingsArrow" style="font-size: 18px; color: var(--text-muted);">&#9660;</span>
         </div>
-        
         <div class="settings-body" id="settingsBody">
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">
-            To log click events (visitor IP, country, browser details) in a Google Sheet for $0, paste your Google Form's <strong>Pre-filled Link</strong> below.
+            To log click events (IP, country, browser) in a Google Sheet for free, paste your Google Form Pre-filled Link below.
           </p>
-
           <div class="warning-msg" id="linkWarning">
-            ⚠️ Oops! It looks like you pasted a Google Sheet URL. Please paste a <strong>Google Form pre-filled link</strong> instead. (Check the guide for details!)
+            &#9888;&#65039; This looks like a Google Sheet URL. Please paste a <strong>Google Form pre-filled link</strong> instead.
           </div>
-
-          <label style="color: var(--success); font-weight: 700;">🚀 Google Form Pre-filled Link</label>
-          <input type="text" id="prefilledLink" placeholder="Paste your entry-populated google form link..." oninput="autoParseLink()" />
-
-          <!-- Read-only parsed fields (hidden complexity) -->
+          <label style="color: var(--success); font-weight: 700;">&#128640; Google Form Pre-filled Link</label>
+          <input type="text" id="prefilledLink" placeholder="Paste your entry-populated Google Form link..." oninput="autoParseLink()" />
           <div style="opacity: 0.6; pointer-events: none;">
             <label>Google Form ID</label>
             <input type="text" id="formId" placeholder="Parsed Form ID" tabindex="-1" />
-
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-              <div>
-                <label>Slug Entry ID</label>
-                <input type="text" id="entrySlug" placeholder="Parsed Slug ID" tabindex="-1" />
-              </div>
-              <div>
-                <label>IP Entry ID</label>
-                <input type="text" id="entryIp" placeholder="Parsed IP ID" tabindex="-1" />
-              </div>
+              <div><label>Slug Entry ID</label><input type="text" id="entrySlug" placeholder="Parsed Slug ID" tabindex="-1" /></div>
+              <div><label>IP Entry ID</label><input type="text" id="entryIp" placeholder="Parsed IP ID" tabindex="-1" /></div>
             </div>
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-              <div>
-                <label>Country Entry ID</label>
-                <input type="text" id="entryCountry" placeholder="Parsed Country ID" tabindex="-1" />
-              </div>
-              <div>
-                <label>UserAgent Entry ID</label>
-                <input type="text" id="entryUa" placeholder="Parsed UA ID" tabindex="-1" />
-              </div>
+              <div><label>Country Entry ID</label><input type="text" id="entryCountry" placeholder="Parsed Country ID" tabindex="-1" /></div>
+              <div><label>UserAgent Entry ID</label><input type="text" id="entryUa" placeholder="Parsed UA ID" tabindex="-1" /></div>
             </div>
           </div>
-
-          <button class="btn btn-primary" onclick="saveAnalyticsConfig()">Save Analytics Configuration</button>
+          <button class="btn btn-primary" id="saveConfigBtn" onclick="saveAnalyticsConfig()">Save Analytics Configuration</button>
         </div>
       </div>
-
     </div>
-
   </div>
 
   <script>
     let redirects = {};
     let repoSha = "";
-    
-    // Automatically detect owner and repository name from URL
+
+    // Auto-detect owner from GitHub Pages hostname
     let owner = "Ziploot";
-    let repo = "unlimited-url-shortener";
-    
     const hostnameParts = window.location.hostname.split('.');
     if (hostnameParts.length >= 3 && hostnameParts[1] === "github" && hostnameParts[2] === "io") {
       owner = hostnameParts[0];
-      repo = owner + ".github.io"; // Default for root user repos
     }
-    const pathParts = window.location.pathname.split('/');
-    if (pathParts[1] && pathParts[1] !== "" && !pathParts[1].endsWith(".html") && pathParts[1] !== "index.html") {
-      repo = pathParts[1];
-    }
+    const repo = owner + ".github.io";
 
-    // Check if activated
     const savedPat = localStorage.getItem("GITHUB_PAT");
-    if (savedPat) {
-      showDashboard();
-    }
+    if (savedPat) showDashboard();
 
     function activateManager() {
       const pat = document.getElementById("wizardPat").value.trim();
-      if (!pat) {
-        alert("Please enter your GitHub Personal Access Token (PAT).");
-        return;
-      }
+      if (!pat) { alert("Please enter your GitHub PAT."); return; }
       localStorage.setItem("GITHUB_PAT", pat);
       showDashboard();
     }
@@ -356,7 +223,7 @@
       document.getElementById("dashboardSection").style.display = "block";
       document.getElementById("logoutBtn").style.display = "block";
       
-      // Populate fields
+      // Fallback pre-population from localStorage
       document.getElementById("prefilledLink").value = localStorage.getItem("PREFILLED_LINK") || "";
       document.getElementById("formId").value = localStorage.getItem("GOOGLE_FORM_ID") || "";
       document.getElementById("entrySlug").value = localStorage.getItem("ENTRY_SLUG") || "";
@@ -364,108 +231,134 @@
       document.getElementById("entryCountry").value = localStorage.getItem("ENTRY_COUNTRY") || "";
       document.getElementById("entryUa").value = localStorage.getItem("ENTRY_UA") || "";
       
-      autoParseLink(); // Run parse on startup to trigger warnings/validations if any
       updateLiveLinkTip();
       loadRedirects();
     }
 
     function updateLiveLinkTip() {
       const slug = document.getElementById("newSlug").value.trim().toLowerCase() || "slug";
-      const tipElement = document.getElementById("liveLinkTip");
-      
-      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-        tipElement.textContent = `Short Link: http://localhost:8000/${slug}`;
-      } else {
-        // For root user repos (username.github.io), no subfolder in URL
-        tipElement.textContent = `Short Link: https://${owner}.github.io/${slug}`;
-      }
+      document.getElementById("liveLinkTip").textContent = "Short Link: https://" + owner + ".github.io/" + slug;
     }
 
     function toggleSettings() {
       const body = document.getElementById("settingsBody");
       const arrow = document.getElementById("settingsArrow");
       body.classList.toggle("active");
-      arrow.textContent = body.classList.contains("active") ? "▲" : "▼";
+      arrow.innerHTML = body.classList.contains("active") ? "&#9650;" : "&#9660;";
     }
 
     function autoParseLink() {
       const urlString = document.getElementById("prefilledLink").value.trim();
       const warning = document.getElementById("linkWarning");
       warning.style.display = "none";
-
       if (!urlString) return;
-
-      if (urlString.includes("spreadsheets/d/")) {
-        warning.style.display = "block";
-        return;
-      }
-
+      if (urlString.includes("spreadsheets/d/")) { warning.style.display = "block"; return; }
       try {
         const url = new URL(urlString);
-        
-        // 1. Extract Form ID
         const pathParts = url.pathname.split('/');
         const eIndex = pathParts.indexOf('e');
         if (eIndex !== -1 && pathParts[eIndex + 1]) {
           document.getElementById("formId").value = pathParts[eIndex + 1];
-        } else {
-          const dIndex = pathParts.indexOf('d');
-          if (dIndex !== -1 && pathParts[dIndex + 1]) {
-            document.getElementById("formId").value = pathParts[dIndex + 1];
-          }
         }
-
-        // 2. Extract Entry IDs
         const params = new URLSearchParams(url.search);
         for (const [key, value] of params.entries()) {
           if (key.startsWith("entry.")) {
             const entryId = key.substring(6);
-            const valLower = value.toLowerCase().trim();
-            if (valLower === "slug") {
-              document.getElementById("entrySlug").value = entryId;
-            } else if (valLower === "ip") {
-              document.getElementById("entryIp").value = entryId;
-            } else if (valLower === "country") {
-              document.getElementById("entryCountry").value = entryId;
-            } else if (valLower === "ua" || valLower === "useragent") {
-              document.getElementById("entryUa").value = entryId;
-            }
+            const val = value.toLowerCase().trim();
+            if (val === "slug") document.getElementById("entrySlug").value = entryId;
+            else if (val === "ip") document.getElementById("entryIp").value = entryId;
+            else if (val === "country") document.getElementById("entryCountry").value = entryId;
+            else if (val === "ua" || val === "useragent") document.getElementById("entryUa").value = entryId;
           }
         }
-      } catch (e) {
-        // Silent error
-      }
+      } catch (e) {}
     }
 
-    function saveAnalyticsConfig() {
-      localStorage.setItem("PREFILLED_LINK", document.getElementById("prefilledLink").value);
-      localStorage.setItem("GOOGLE_FORM_ID", document.getElementById("formId").value);
-      localStorage.setItem("ENTRY_SLUG", document.getElementById("entrySlug").value);
-      localStorage.setItem("ENTRY_IP", document.getElementById("entryIp").value);
-      localStorage.setItem("ENTRY_COUNTRY", document.getElementById("entryCountry").value);
-      localStorage.setItem("ENTRY_UA", document.getElementById("entryUa").value);
-      alert("Analytics configuration saved locally!");
+    async function saveAnalyticsConfig() {
+      const formId = document.getElementById("formId").value.trim();
+      const entrySlug = document.getElementById("entrySlug").value.trim();
+      const entryIp = document.getElementById("entryIp").value.trim();
+      const entryCountry = document.getElementById("entryCountry").value.trim();
+      const entryUa = document.getElementById("entryUa").value.trim();
+      const prefilled = document.getElementById("prefilledLink").value.trim();
+
+      if (!formId || !entrySlug || !entryIp || !entryCountry || !entryUa) {
+        alert("Please paste a valid Google Form Pre-filled link so it can parse entry IDs.");
+        return;
+      }
+
+      // Store in redirects map under the special key '_config'
+      redirects["_config"] = {
+        formId: formId,
+        entrySlug: entrySlug,
+        entryIp: entryIp,
+        entryCountry: entryCountry,
+        entryUa: entryUa,
+        prefilledLink: prefilled
+      };
+
+      // Backup locally
+      localStorage.setItem("PREFILLED_LINK", prefilled);
+      localStorage.setItem("GOOGLE_FORM_ID", formId);
+      localStorage.setItem("ENTRY_SLUG", entrySlug);
+      localStorage.setItem("ENTRY_IP", entryIp);
+      localStorage.setItem("ENTRY_COUNTRY", entryCountry);
+      localStorage.setItem("ENTRY_UA", entryUa);
+
+      const btn = document.getElementById("saveConfigBtn");
+      const originalText = btn.textContent;
+      btn.textContent = "Saving to GitHub...";
+      btn.disabled = true;
+
+      await commitToGitHub("Update Analytics Configuration");
+
+      btn.textContent = originalText;
+      btn.disabled = false;
+      alert("Analytics configuration saved and synced to GitHub! It works for all visitors now.");
     }
 
     async function loadRedirects() {
+      const pat = localStorage.getItem("GITHUB_PAT");
+      if (!pat) return;
       try {
-        const res = await fetch('redirects.json?v=' + Date.now());
-        redirects = await res.json();
-        renderTable();
-        
-        // Fetch metadata to get file SHA (required for updating commits via API)
-        const pat = localStorage.getItem("GITHUB_PAT");
-        if (pat) {
-          const metaRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/redirects.json`, {
-            headers: { "Authorization": `token ${pat}` }
-          });
-          if (metaRes.ok) {
-            const meta = await metaRes.json();
-            repoSha = meta.sha;
+        const metaRes = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/contents/redirects.json", {
+          headers: { "Authorization": "token " + pat, "Cache-Control": "no-cache" }
+        });
+        if (metaRes.ok) {
+          const meta = await metaRes.json();
+          repoSha = meta.sha;
+          const content = atob(meta.content.replace(/
+/g, ""));
+          redirects = JSON.parse(content);
+
+          // If GitHub has a config, update the UI input fields
+          if (redirects._config) {
+            const conf = redirects._config;
+            document.getElementById("prefilledLink").value = conf.prefilledLink || "";
+            document.getElementById("formId").value = conf.formId || "";
+            document.getElementById("entrySlug").value = conf.entrySlug || "";
+            document.getElementById("entryIp").value = conf.entryIp || "";
+            document.getElementById("entryCountry").value = conf.entryCountry || "";
+            document.getElementById("entryUa").value = conf.entryUa || "";
+            
+            // Backup in localStorage
+            localStorage.setItem("PREFILLED_LINK", conf.prefilledLink || "");
+            localStorage.setItem("GOOGLE_FORM_ID", conf.formId || "");
+            localStorage.setItem("ENTRY_SLUG", conf.entrySlug || "");
+            localStorage.setItem("ENTRY_IP", conf.entryIp || "");
+            localStorage.setItem("ENTRY_COUNTRY", conf.entryCountry || "");
+            localStorage.setItem("ENTRY_UA", conf.entryUa || "");
           }
+          renderTable();
         }
       } catch (e) {
-        console.error("Could not fetch redirects.json metadata.", e);
+        try {
+          const res = await fetch("/redirects.json?v=" + Date.now());
+          redirects = await res.json();
+          renderTable();
+        } catch (e2) {
+          document.getElementById("linksContainer").innerHTML = '<div style="text-align:center;padding:20px;color:var(--danger)">Could not load links. Check your PAT.</div>';
+        }
       }
     }
 
@@ -473,29 +366,23 @@
       const container = document.getElementById("linksContainer");
       container.innerHTML = "";
       
-      const keys = Object.keys(redirects);
+      // Filter out _config key so it doesn't show in the user's redirects list
+      const keys = Object.keys(redirects).filter(k => k !== "_config");
+      
       if (keys.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:14px;">No short links created yet.</div>`;
+        container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:14px;">No short links yet. Create one above!</div>';
         return;
       }
-
       keys.forEach(slug => {
         const row = document.createElement("div");
         row.className = "link-row";
-        
-        const fullShortUrl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
-          ? `http://localhost:8000/${slug}`
-          : `https://${owner}.github.io/${slug}`;
-          
+        const shortUrl = "https://" + owner + ".github.io/" + slug;
         row.innerHTML = `
           <div class="link-details">
             <div class="link-slug">/${slug}</div>
-            <div class="link-dest">
-              <span>Redirects to: </span>
-              <a href="${redirects[slug]}" target="_blank">${redirects[slug]}</a>
-            </div>
-            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
-              Short link: <a href="${fullShortUrl}" target="_blank" style="color:var(--success);">${fullShortUrl}</a>
+            <div class="link-dest">Redirects to: <a href="${redirects[slug]}" target="_blank">${redirects[slug]}</a></div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">
+              Short link: <a href="${shortUrl}" target="_blank" style="color:var(--success);">${shortUrl}</a>
             </div>
           </div>
           <button class="btn btn-danger" onclick="deleteLink('${slug}')">Delete</button>
@@ -508,76 +395,67 @@
       const slug = document.getElementById("newSlug").value.trim().toLowerCase();
       const url = document.getElementById("newUrl").value.trim();
       const pat = localStorage.getItem("GITHUB_PAT");
-
-      if (!slug || !url || !pat) {
-        alert("Please fill in both the Short Path (Slug) and Destination URL.");
-        return;
-      }
-
-      // Basic validation
-      if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        alert("Destination URL must start with http:// or https://");
-        return;
-      }
-
+      if (!slug || !url || !pat) { alert("Please fill in both the Short Path and Destination URL."); return; }
+      if (slug === "_config") { alert("The slug name '_config' is reserved for system settings."); return; }
+      if (!url.startsWith("http://") && !url.startsWith("https://")) { alert("URL must start with http:// or https://"); return; }
+      
       document.getElementById("createSpinner").style.display = "inline-block";
       document.getElementById("createBtn").disabled = true;
-
+      
       redirects[slug] = url;
       await commitToGitHub("Add short link /" + slug);
       
       document.getElementById("createSpinner").style.display = "none";
       document.getElementById("createBtn").disabled = false;
+      document.getElementById("newSlug").value = "";
+      document.getElementById("newUrl").value = "";
+      updateLiveLinkTip();
     }
 
     async function deleteLink(slug) {
-      if (confirm("Are you sure you want to delete the redirect /" + slug + "?")) {
+      if (confirm("Delete redirect /" + slug + "?")) {
         delete redirects[slug];
         await commitToGitHub("Delete short link /" + slug);
       }
     }
 
-    async function commitToGitHub(message) {
+    async function commitToGitHub(message, attempt) {
+      if (attempt === undefined) attempt = 0;
       const pat = localStorage.getItem("GITHUB_PAT");
       const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(redirects, null, 2))));
 
-      // Fetch the latest SHA right before committing to avoid mismatch error
-      try {
-        const metaRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/redirects.json`, {
-          headers: { 
-            "Authorization": `token ${pat}`,
-            "Cache-Control": "no-cache"
-          }
-        });
-        if (metaRes.ok) {
-          const meta = await metaRes.json();
-          repoSha = meta.sha;
-        }
-      } catch (e) {
-        console.error("Failed to fetch fresh SHA", e);
-      }
-
-      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/redirects.json`, {
+      const res = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/contents/redirects.json", {
         method: "PUT",
-        headers: {
-          "Authorization": `token ${pat}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          message: message,
-          content: contentBase64,
-          sha: repoSha
-        })
+        headers: { "Authorization": "token " + pat, "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message, content: contentBase64, sha: repoSha })
       });
 
       if (res.ok) {
-        alert("Success! Short link saved and changes deployed to GitHub Pages.");
-        document.getElementById("newSlug").value = "";
-        document.getElementById("newUrl").value = "";
-        loadRedirects();
+        const responseData = await res.json();
+        repoSha = responseData.content.sha; // store fresh SHA from response
+        renderTable();
+      } else if (attempt < 2) {
+        // SHA mismatch or stale — silently fetch fresh SHA and retry
+        try {
+          const shaRes = await fetch(
+            "https://api.github.com/repos/" + owner + "/" + repo + "/contents/redirects.json?_=" + Date.now(),
+            { headers: { "Authorization": "token " + pat } }
+          );
+          if (shaRes.ok) {
+            const shaData = await shaRes.json();
+            repoSha = shaData.sha;
+            // Merge: keep all remote entries + config + add our new ones
+            const remoteContent = JSON.parse(atob(shaData.content.replace(/
+/g, "")));
+            redirects = Object.assign({}, remoteContent, redirects);
+          }
+        } catch (e) {}
+        return commitToGitHub(message, attempt + 1); // retry silently
       } else {
-        const err = await res.json();
-        alert("Error saving: " + err.message);
+        const err = await res.json().catch(() => ({ message: "Unknown error" }));
+        alert("Error saving: " + err.message + "
+Please refresh the page and try again.");
+        await loadRedirects();
       }
     }
   </script>
