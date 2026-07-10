@@ -454,16 +454,14 @@
             const shaData = await shaRes.json();
             repoSha = shaData.sha;
             // Merge: keep all remote entries + config + add our new ones
-            const remoteContent = JSON.parse(atob(shaData.content.replace(/
-/g, "")));
+            const remoteContent = JSON.parse(atob(shaData.content.replace(/\r?\n/g, "")));
             redirects = Object.assign({}, remoteContent, redirects);
           }
         } catch (e) {}
         return commitToGitHub(message, attempt + 1); // retry silently
       } else {
         const err = await res.json().catch(() => ({ message: "Unknown error" }));
-        alert("Error saving: " + err.message + "
-Please refresh the page and try again.");
+        alert("Error saving: " + err.message + "\nPlease refresh the page and try again.");
         await loadRedirects();
       }
     }
