@@ -53,11 +53,11 @@ try {
     function Upload-GitHubFile($filename, $filePath) {
         $fileContent = [System.IO.File]::ReadAllText($filePath, [System.Text.Encoding]::UTF8)
         if ($filename -eq "admin.html") {
-            $fileContent = $fileContent -replace 'let owner = "Ziploot";', "let owner = `\"$username`\";"
+            $fileContent = $fileContent -replace 'let owner = "Ziploot";', "let owner = `"$username`";"
         }
         if ($filename -eq "404.html") {
-            # Replace hostname parsing owner detection with hardcoded username to support custom domains
-            $fileContent = $fileContent -replace 'const owner = window.location.hostname.split\(\'\.\'\)\[0\];', "const owner = `\"$username`\";"
+            # Use wildcard .* instead of single quotes in regex to avoid PowerShell parser syntax issues
+            $fileContent = $fileContent -replace 'const owner = window\.location\.hostname\.split.*0\].*;', "const owner = `"$username`";"
         }
         $contentBytes = [System.Text.Encoding]::UTF8.GetBytes($fileContent)
         $contentBase64 = [Convert]::ToBase64String($contentBytes)
