@@ -16,10 +16,8 @@
       // 1. Get current path slug (e.g. /telegram -> telegram)
       const path = window.location.pathname;
       const slug = path.split('/').pop().trim().toLowerCase();
-
       try {
-        // 2. Fetch redirects map
-        const res = await fetch('redirects.json');
+        const res = await fetch('/redirects.json');
         const redirects = await res.json();
         const targetUrl = redirects[slug];
 
